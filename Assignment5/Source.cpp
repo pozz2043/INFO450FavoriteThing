@@ -17,7 +17,7 @@ private:
 
 public:
 	FavoriteMovies();
-	void getFavoriteMovies();
+	void getFavoriteMovies(string a);
 	friend ostream& operator<<(ostream &o, FavoriteMovies& i);
 	string getMoviewTitle();
 };
@@ -71,17 +71,16 @@ int FavoriteMoviesList::getThisID()
 bool FavoriteMoviesList::isInList(string mTitle) // if an item(movieTitle)already exist, return true
 {
 	bool answer = false;
-	string altTitle="";
+	string altTitle = "";
 	int i;
-	int x = numItems;
-	for (i = 0; i < x; i++)
+	for (i = 0; i < numItems; i++)
 	{
 		altTitle = iList[i].getMoviewTitle();
 
-		if (mTitle== altTitle)
+		if (mTitle == altTitle)
 		{
-			answer= true;
-			
+			answer = true;
+
 			break;
 		}
 		else;
@@ -105,44 +104,45 @@ ostream& operator<<(ostream &o, FavoriteMovies& i)
 }
 
 // gets input from the user for the FavoriteMovies object
-void FavoriteMovies::getFavoriteMovies()
+void FavoriteMovies::getFavoriteMovies(string listTitle)
 {
-	cout << "enter name" << endl;
-	getline(cin, movieTitle); // Is this going where? possible to do this way? or do i need to find another? MovieList(string, string, string, int,int)? MovieList *iList=NULL?
+ // Is this going where? possible to do this way? or do i need to find another? MovieList(string, string, string, int,int)? MovieList *iList=NULL?
 
 	// How can I access the array index of movie title from here? 
 	//Check see if the movie name is already in the array
 	//Use For statement (linear search) to see if the value is still existing.
 	//If the value is not in the list, add, if not, Say "the movie is already in the array. try diffrent."
-	//call addFaovritemovies function (if the value is in the list)
-	FavoriteMoviesList list;
-	bool answer= list.isInList(movieTitle);
-	if (answer == true)
-	{
-			getFavoriteMovies();
-	}
-	else
-	{
-		cout << "enter Genre:" << endl;
-		getline(cin, movieGenre);
-		cout << "enter Country:" << endl;
-		getline(cin, movieCountry);
-		cout << "enter Year of Realsed:" << endl;
-		cin >> movieYearRealsed;
-		cout << "enter rating:" << endl;
-		cin >> movieRating;
-		cin.ignore();
-		cin.clear();
-	}
+	//call addFaovritemovies function (if the value is in the lis
+	movieTitle = listTitle;
+	cout << "enter Genre:" << endl;
+	getline(cin, movieGenre);
+	cout << "enter Country:" << endl;
+	getline(cin, movieCountry);
+	cout << "enter Year of Realsed:" << endl;
+	cin >> movieYearRealsed;
+	cout << "enter rating:" << endl;
+	cin >> movieRating;
+	cin.ignore();
+	cin.clear();
 }
 
 
 // adds an FavoriteMovies item to the list
 void FavoriteMoviesList::addItem()
 {
-	iList[numItems].getFavoriteMovies();
+	bool answer = false;
+	string listTitle;
+	do {
+		cout << "enter name" << endl;
+		getline(cin, listTitle);
+		answer = isInList(listTitle);
+		if (answer == true)
+		{
+			cout << "ERROR" << endl;
+		}
+	} while (answer == true);
+	iList[numItems].getFavoriteMovies(listTitle);
 	numItems++; // keeps track of the number of items
-	cout << numItems << endl;
 
 }
 
@@ -156,7 +156,6 @@ void FavoriteMoviesList::showList()
 
 int main()
 {
-	int j;
 	bool quit;
 	FavoriteMoviesList myList; // create list object 
 	string quitOrder;
