@@ -140,6 +140,7 @@ void FavoriteMoviesList::addItem()
 		{
 			cout << "ERROR" << endl;
 		}
+		else;
 	} while (answer == true);
 	iList[numItems].getFavoriteMovies(listTitle);
 	numItems++; // keeps track of the number of items
